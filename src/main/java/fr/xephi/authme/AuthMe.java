@@ -292,6 +292,13 @@ public class AuthMe extends JavaPlugin {
             ConsoleLogger.warning("You are using an unsalted hash (" + hash + "). Support for this will be removed "
                 + "in 5.4 -- do you still need it? Comment on https://github.com/AuthMe/AuthMeReloaded/issues/1016");
         }
+
+        // Check if argon2 library is present and can be loaded
+        if (hash.equals(HashAlgorithm.ARGON2) && !OnStartupTasks.checkArgon2Presence()) {
+            ConsoleLogger.warning("WARNING!!! You use Argon2 Hash Algorithm method but we can't found any "
+                + "Argon2 library on your system !");
+            stopOrUnload();
+        }
     }
 
     /**
